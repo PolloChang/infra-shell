@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Script Name: 01-mirror-repos.sh
+# Script Name: /etc/profile.d/ssh-login-info.sh
 # Version: 1.0
 # Author: PolloChang
 # Date: 2023-09-14
