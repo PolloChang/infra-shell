@@ -6,6 +6,7 @@
 # Date: 2024-10-15
 # Description: Mirror repos 
 # Modified:
+# 2024-10-16: 排除目錄與檔案節省硬碟空間 'getPackageSource/','index_src.html','index.html'
 
 export REPO_HOME_PATH="/data/repository/repo"
 export REPO_URL="yum-rsync.oracle.com/repo/OracleLinux"
@@ -34,7 +35,7 @@ echo "$(date +'%Y-%m-%d %H:%M:%S') - Mirror Oracle Linux yum repo start"| tee -a
 for key in "${!REPO_PATHS[@]}"; do
     echo "$(date +'%Y-%m-%d %H:%M:%S') - Starting sync for ${key}" | tee -a $LOG_FILE
     mkdir -p ${REPO_HOME_PATH}/${key}/ 2>&1 | tee -a $LOG_FILE
-    rsync -arv rsync://${REPO_URL}${REPO_PATHS[$key]} ${REPO_HOME_PATH}/${key}/ 2>&1 | tee -a $LOG_FILE
+    rsync --exclude={'getPackageSource/','index_src.html','index.html'} -arv rsync://${REPO_URL}${REPO_PATHS[$key]} ${REPO_HOME_PATH}/${key}/ 2>&1 | tee -a $LOG_FILE
     if [[ $? -eq 0 ]]; then
         echo "$(date +'%Y-%m-%d %H:%M:%S') - Sync for ${key} completed successfully" | tee -a $LOG_FILE
     else
